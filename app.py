@@ -1,18 +1,16 @@
 import streamlit as st
 import pandas as pd
 import requests
-from datetime import datetime
 
 # ── APP-KONFIGURATION ───────────────────────────────────────
 st.set_page_config(page_title="Trading Scanner Pro", layout="wide", page_icon="📈")
 st.title("📈 Trading Scanner Pro (Cloud Version)")
 st.write("Professionelle und stabile Marktanalyse direkt über globale Cloud-Server.")
 
-# Die stabilsten Krypto-Handelspaare (erweiterte Liste)
+# Die stabilsten Krypto-Handelspaare 
 TOP_KRYPTO = [
     "BTCUSDT", "ETHUSDT", "BNBUSDT", "SOLUSDT", 
-    "XRPUSDT", "ADAUSDT", "LINKUSDT", "LTCUSDT",
-    "DOTUSDT", "AVAXUSDT", "TRXUSDT", "MATICUSDT"
+    "XRPUSDT", "ADAUSDT", "LINKUSDT", "LTCUSDT"
 ]
 
 # Parameter-Sidebar
@@ -23,9 +21,9 @@ def get_tradingview_link(ticker):
     return f"https://www.tradingview.com/symbols/{ticker}/"
 
 def hole_krypto_daten(symbol):
-    """Holt historische Kerzen-Daten über die offizielle Krypto-Schnittstelle."""
-    # Fallback-Schnittstelle für maximale Stabilität im Web
-    url = f"https://api1.binance.com/api/v3/klines?symbol={symbol}&interval=1d&limit=250"
+    """Holt historische Kerzen-Daten über den unblockierbaren US-Server."""
+    # Wechsel auf die unblockierte API-Variante
+    url = f"https://api.binance.us/api/v3/klines?symbol={symbol}&interval=1d&limit=250"
     try:
         res = requests.get(url, timeout=10)
         if res.status_code != 200:
@@ -103,5 +101,4 @@ if st.button("🚀 Markt-Scan jetzt starten", use_container_width=True):
             with cols[i % 4]:
                 st.link_button(f"🔍 {row['Asset']}", row['Link'], use_container_width=True)
     else:
-        st.error("Datenverbindung fehlgeschlagen. Bitte versuche es in wenigen Sekunden erneut.")
-      
+        st.error("Der Server konnte keine Verbindung aufbauen. Bitte warte einen Moment und klicke erneut auf Scannen.")
